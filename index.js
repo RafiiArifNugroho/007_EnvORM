@@ -36,3 +36,16 @@ app.get('/komik', async (req, res) => {
         res.status(500).send(err);
     }
 });
+
+app.get('/komik/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const komik = await db.Komik.findByPk(id);
+        if (!komik) {
+            return res.status(404).send({ message: 'Komik tidak ditemukan' });
+        }
+        res.send(komik);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
